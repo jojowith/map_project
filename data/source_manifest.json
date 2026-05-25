@@ -1,0 +1,30 @@
+{
+  "generatedAt": "2026-05-21T16:31:21+08:00",
+  "sources": [
+    {
+      "name": "臺北市指定吸菸區",
+      "url": "https://data.taipei/api/dataset/8b2fcdeb-d14b-46c4-92d8-66ad07b96a91/resource/acaa0f43-3b92-4241-b5eb-3f7fdd76b74f/download",
+      "count": 181
+    },
+    {
+      "name": "臺北市公告禁菸場所",
+      "url": "https://data.taipei/api/frontstage/tpeod/dataset/resource.download?rid=ccaeb9ba-fb75-45a6-8a1f-269527db8015",
+      "count": 2436
+    },
+    {
+      "name": "新北市戶外無菸休憩空間",
+      "url": "https://data.ntpc.gov.tw/api/datasets/6311e0c1-cd37-487f-95b9-83616dccaa02/json?page=0&size=1000",
+      "count": 5
+    },
+    {
+      "name": "YouBike2.0臺北市公共自行車即時資訊",
+      "url": "https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbike_immediate.json",
+      "count": 1740
+    }
+  ],
+  "notes": [
+    "臺北市公告禁菸場所使用具 X/Y 座標之製圖用子資源。",
+    "新北市資料部分經緯度為空，僅同步官方有座標或本專案示範補點。正式版建議接地理編碼 API 補齊。",
+    "YouBike pressure 為代理人流分數，不等於現場真實人數。"
+  ]
+}

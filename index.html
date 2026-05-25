@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>雙北智慧吸菸區導航與人流分流系統</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="panel panel-left">
+        <header class="brand">
+          <span>Metro Taipei Live</span>
+          <h1>智慧吸菸區導航與分流</h1>
+          <p>以官方點位、禁菸範圍與交通代理資料，產生可解釋的推薦排序。</p>
+        </header>
+
+        <section class="mode-switch" aria-label="導航模式">
+          <button class="mode-button active" data-mode="smoker">尋找吸菸區</button>
+          <button class="mode-button" data-mode="clean">無菸淨步</button>
+        </section>
+
+        <section class="control-grid">
+          <label>
+            <span>行政區</span>
+            <select id="district-filter">
+              <option value="all">全部行政區</option>
+            </select>
+          </label>
+          <label>
+            <span>搜尋</span>
+            <input id="search-input" type="search" placeholder="地點、地址、捷運站..." />
+          </label>
+        </section>
+
+        <section class="status-card">
+          <div class="label">推薦目的地</div>
+          <div class="destination" id="nearest-name">定位中</div>
+          <div class="meta-row">
+            <span id="nearest-distance">-- m</span>
+            <span id="nearest-crowd">承載率 --%</span>
+          </div>
+          <div class="reason-list" id="reason-list"></div>
+          <button class="primary-action" id="locate-button">更新目前位置</button>
+        </section>
+
+        <section class="metrics">
+          <div class="metric">
+            <strong id="smoking-count">0</strong>
+            <span>合法吸菸點</span>
+          </div>
+          <div class="metric">
+            <strong id="restricted-count">0</strong>
+            <span>無菸空間</span>
+          </div>
+          <div class="metric">
+            <strong id="warning-count">0</strong>
+            <span>近距警示</span>
+          </div>
+          <div class="metric">
+            <strong id="mobility-count">0</strong>
+            <span>YouBike 代理</span>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-title">推薦候選點</div>
+          <div class="candidate-list" id="candidate-list"></div>
+        </section>
+
+        <section>
+          <div class="section-title">高負載吸菸點</div>
+          <div class="load-list" id="load-list"></div>
+        </section>
+      </aside>
+
+      <main class="map-stage">
+        <div id="map"></div>
+        <div class="map-toolbar">
+          <button class="city-pill active" data-city="metrotaipei">雙北聯防</button>
+          <button class="city-pill" data-city="taipei">臺北市</button>
+          <label class="layer-toggle"><input type="checkbox" id="toggle-restricted" checked />禁菸</label>
+          <label class="layer-toggle"><input type="checkbox" id="toggle-mobility" />人流代理</label>
+        </div>
+        <div class="legend">
+          <span><i class="legend-dot legal"></i>合法吸菸區</span>
+          <span><i class="legend-dot blocked"></i>禁菸/避讓</span>
+          <span><i class="legend-dot mobility"></i>人流代理</span>
+        </div>
+        <div class="alert-banner" id="alert-banner" hidden>
+          <strong>禁菸區警示</strong>
+          <span id="alert-text"></span>
+        </div>
+      </main>
+
+      <aside class="panel panel-right">
+        <header class="assistant-header">
+          <span class="live-dot"></span>
+          <div>
+            <h2>AI 智慧健康助手</h2>
+            <p>本機規則引擎已可用；設定 API 後可改為 RAG 戒菸諮詢。</p>
+          </div>
+        </header>
+
+        <section class="ops-summary">
+          <div>
+            <span>資料新鮮度</span>
+            <strong id="freshness">本地快取</strong>
+          </div>
+          <div>
+            <span>風險等級</span>
+            <strong id="risk-level">低</strong>
+          </div>
+        </section>
+
+        <section class="admin-panel">
+          <div class="section-title">管理後台快照</div>
+          <div class="district-bars" id="district-bars"></div>
+          <div class="timeline-card">
+            <div class="timeline-title">接下來 60 分鐘壅擠預估</div>
+            <div class="sparkline" id="sparkline"></div>
+          </div>
+        </section>
+
+        <section class="chat-log" id="chat-log">
+          <div class="message user">我想戒菸，吸菸對身體危害真的很嚴重嗎？</div>
+          <div class="message ai">吸菸與二手菸都會提高健康風險。你可以先從減量、避開誘因、尋求戒菸門診或戒菸專線開始，我也可以幫你整理附近資源。</div>
+        </section>
+
+        <form class="chat-input" id="chat-form">
+          <input id="chat-message" type="text" placeholder="詢問戒菸門診或菸害防制規定..." />
+          <button type="submit">送出</button>
+        </form>
+      </aside>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>
